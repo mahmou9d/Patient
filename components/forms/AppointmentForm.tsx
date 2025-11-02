@@ -228,8 +228,8 @@ const payload: CancelAppointmentPayload | null =
             <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
               control={form.control}
-              name="confirmed_appointment_datetime"
-              label="Confirmed Appointment Time"
+              name="expected_appointment_date"
+              label="Expected appointment date"
               showTimeSelect
               dateFormat="MM/dd/yyyy  -  h:mm aa"
             />
