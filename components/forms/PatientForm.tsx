@@ -30,8 +30,6 @@ export enum FormFieldType {
 
 const PatientForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-const [showModal, setShowModal] = useState(false);
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -57,14 +55,13 @@ const [showModal, setShowModal] = useState(false);
       // const newUser = await createUser(user);
       console.log(getuser.payload.is_admin);
       // console.log(newUser,"jgfkjhgk")
-      if (newUser && !getuser.payload.is_admin) {
+      if (getuser.payload.is_admin) {
+        router.push("/admin");
+      }
+      if (newUser) {
         // router.push(`/patients/${getuser.payload.user_id}/register`);
         router.push(`/patients/${getuser.payload.user_id}/new-appointment`);
       }
-if (getuser.payload.is_admin) {
-  setShowModal(true);
-}
-
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +70,6 @@ if (getuser.payload.is_admin) {
   };
   return (
     <>
-    {showModal && <PassKeyModal />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <section className="mb-12 space-y-4">

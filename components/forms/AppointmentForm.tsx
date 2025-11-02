@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { SelectItem } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 // import { Doctors } from "@/constants";
 import // createAppointment,
 // updateAppointment,
@@ -33,6 +33,9 @@ import {
 } from "@/store/slices/Appointment/cancelAppointmentSlice";
 import { getRecentAppointmentList } from "@/store/slices/Appointment/getRecentAppointmentListSlice";
 import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import Link from "next/link";
+import { getUser } from "@/store/slices/User/getUserSlice";
 
 export const AppointmentForm = ({
   userId,
@@ -49,11 +52,13 @@ export const AppointmentForm = ({
   // console.log(userId)
   // console.log(appointment, "additional_notes");
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
+  const { is_admin } = useAppSelector((state: RootState) => state.getUser);
   console.log(Doctors, "RootState");
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // console.log("🟢 Dispatching getdoctors...");
+    dispatch(getUser())
     dispatch(getdoctors());
   }, [dispatch]);
   const router = useRouter();
@@ -187,12 +192,20 @@ export const AppointmentForm = ({
     default:
       buttonLabel = "Submit Apppointment";
   }
-
+const groupedDoctors = Doctors.reduce((groups, doctor) => {
+  const key = doctor.specialty || "Other";
+  if (!groups[key]) groups[key] = [];
+  groups[key].push(doctor);
+  return groups;
+}, {} as Record<string, typeof Doctors>);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         {type === "create" && (
           <section className="mb-12 space-y-4">
+            {is_admin&&<Link href={"/admin"} className="text-green-500">
+              Admin
+            </Link>}
             <h1 className="header">New Appointment</h1>
             <p className="text-dark-700">
               Request a new appointment in 10 seconds.
@@ -209,24 +222,42 @@ export const AppointmentForm = ({
               label="Doctor"
               placeholder="Select a doctor"
             >
-              {Doctors.map((doctor, i) => (
-                <SelectItem
-                  // className="z-[9999]"
-                  key={doctor.id}
-                  value={doctor.id.toString()}
-                >
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <Image
-                      src={doctor.img_url.replace("http://", "https://")}
-                      width={32}
-                      height={32}
-                      alt="doctor"
-                      className="rounded-full border border-dark-500"
-                    />
-                    <p>{`${doctor.first_name} ${doctor.last_name}`} </p>
-                  </div>
-                </SelectItem>
-              ))}
+              <Accordion type="single" collapsible className="w-full">
+                {Object.entries(groupedDoctors).map(
+                  ([specialization, doctors]) => (
+                    <AccordionItem key={specialization} value={specialization}>
+                      <AccordionTrigger className="text-sm font-medium xl:px-5 capitalize hover:no-underline">
+                        {specialization}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex flex-col gap-2 xl:px-5">
+                          {doctors.map((doctor) => (
+                            <div
+                              key={doctor.id}
+                              onClick={() =>
+                                form.setValue("doctor_id", doctor.id.toString())
+                              }
+                              className="flex items-center gap-2 cursor-pointer hover:bg-accent p-2 rounded-md transition"
+                            >
+                              <Image
+                                src={doctor.img_url.replace(
+                                  "http://",
+                                  "https://"
+                                )}
+                                width={32}
+                                height={32}
+                                alt="doctor"
+                                className="rounded-full border border-gray-300"
+                              />
+                              <p className="text-sm">{`${doctor.first_name} ${doctor.last_name}`}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )
+                )}
+              </Accordion>
             </CustomFormField>
 
             <CustomFormField

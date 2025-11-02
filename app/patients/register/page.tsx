@@ -21,6 +21,7 @@ const Registration = async ({ params }: SearchParamProps) => {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
+          
           <RegisterForm user={Number(userId)} />
           <p className="copyright py-10">© 2025 CarePluse</p>
         </div>

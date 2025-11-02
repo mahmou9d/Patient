@@ -27,6 +27,8 @@ import { AppDispatch, RootState } from "@/store/store";
 import { registerPatient } from "@/store/slices/Patient/registerPatientSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
+import Link from "next/link";
+import { getUser } from "@/store/slices/User/getUserSlice";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -40,14 +42,15 @@ export enum FormFieldType {
 }
 
 const RegisterForm = ({ user }: { user: number }) => {
-    const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
-    // console.log(Doctors, "RootState");
-    const dispatch = useAppDispatch();
-  
-    useEffect(() => {
-      // console.log("🟢 Dispatching getdoctors...");
-      dispatch(getdoctors());
-    }, [dispatch]);
+  const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
+  const { is_admin } = useAppSelector((state: RootState) => state.getUser);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // console.log("🟢 Dispatching getdoctors...");
+    dispatch(getUser());
+    dispatch(getdoctors());
+  }, [dispatch]);
   // const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -156,6 +159,11 @@ const RegisterForm = ({ user }: { user: number }) => {
         <section className="space-y-4">
           <h1 className="header">Welcome 👋</h1>
           <p className="text-dark-700">Let us know more about yourself.</p>
+          {is_admin && (
+            <Link href={"/admin"} className="text-green-500">
+              Admin
+            </Link>
+          )}
         </section>
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
