@@ -36,6 +36,8 @@ import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentS
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import Link from "next/link";
 import { getUser } from "@/store/slices/User/getUserSlice";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 export const AppointmentForm = ({
   userId,
@@ -63,6 +65,7 @@ export const AppointmentForm = ({
   }, [dispatch]);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+const [openSpecialization, setOpenSpecialization] = useState<string>("");
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
@@ -198,6 +201,7 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
   groups[key].push(doctor);
   return groups;
 }, {} as Record<string, typeof Doctors>);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
@@ -217,16 +221,109 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
 
         {type !== "cancel" && (
           <>
-          <CustomFormField fieldType={FormFieldType.SELECT} control={form.control} name="doctor_id" label="Doctor" placeholder="Select a doctor" >
-             {Doctors.map((doctor, i) => (
-               <SelectItem  className="z-[9999]" key={doctor.id} value={doctor.id.toString()} > 
-               <div className="flex cursor-pointer items-center gap-2">
-                 <Image src={doctor.img_url.replace("http://", "https://")} width={32} height={32} alt="doctor" className="rounded-full border border-dark-500" /> 
-                 <p>{`${doctor.first_name} ${doctor.last_name}`}</p>
-                    </div> </SelectItem>
-                   ))}
-              </CustomFormField>
-            {/* <CustomFormField
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="doctor_id"
+              label="Doctor"
+              placeholder="Select a doctor"
+            >
+              {Object.entries(groupedDoctors).map(
+                ([specialization, doctors]) => {
+                  // const isOpen =
+                  //   form.watch("openSpecialization") === specialization;
+const isOpen = openSpecialization === specialization;
+                  return (
+                    <div key={specialization} className="w-full">
+                      <div
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setOpenSpecialization(isOpen ? "" : specialization);
+                        }}
+                        className="flex w-full items-center justify-between px-3 py-2 hover:bg-accent rounded-md cursor-pointer mb-1"
+                      >
+                        <h1 className="text-gray-400 font-medium capitalize">
+                          {specialization}
+                        </h1>
+                        
+                        <h1 className="text-gray-400 text-xs">
+                          {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                        </h1>
+                      </div>
+                      
+                      {isOpen && (
+                        <div className="pl-4 py-1 flex flex-col gap-1">
+                          {doctors.map((doctor) => (
+                            <SelectItem
+                              key={doctor.id}
+                              value={doctor.id.toString()}
+                              className="flex flex-row w-full items-center gap-2 cursor-pointer hover:bg-accent p-2 rounded-md transition"
+                            >
+                              <div className="flex gap-2">
+                                <Image
+                                src={doctor.img_url.replace(
+                                  "http://",
+                                  "https://"
+                                )}
+                                width={28}
+                                height={28}
+                                alt="doctor"
+                                className="rounded-full border border-gray-300"
+                              />
+                              <div className="text-sm">
+                                {doctor.first_name} {doctor.last_name}
+                              </div>
+                              </div>
+                              
+                            </SelectItem>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+              )}
+            </CustomFormField>
+            <div>
+              {/* <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="doctor_id"
+              label="Doctor"
+              placeholder="Select a doctor"
+            >
+              {Object.entries(groupedDoctors).map(
+                ([specialization, doctors]) => (
+                  <SelectGroup key={specialization}>
+                    <SelectLabel className="text-gray-500 font-medium capitalize">
+                      {specialization}
+                    </SelectLabel>
+
+                    {doctors.map((doctor) => (
+                      <SelectItem
+                        key={doctor.id}
+                        value={doctor.id.toString()}
+                        className="flex items-center gap-2 cursor-pointer hover:bg-accent p-2 rounded-md transition"
+                      >
+                        <Image
+                          src={doctor.img_url.replace("http://", "https://")}
+                          width={28}
+                          height={28}
+                          alt="doctor"
+                          className="rounded-full border border-gray-300"
+                        />
+                        <span className="text-sm">
+                          {doctor.first_name} {doctor.last_name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )
+              )}
+            </CustomFormField> */}
+
+              {/* <CustomFormField
               fieldType={FormFieldType.SELECT}
               control={form.control}
               name="doctor_id"
@@ -270,6 +367,7 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
                 )}
               </Accordion>
             </CustomFormField> */}
+            </div>
 
             <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
