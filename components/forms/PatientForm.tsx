@@ -53,14 +53,17 @@ const PatientForm = () => {
       const getuser = await dispatch(getUser());
       // console.log(getuser.payload.user_id, "getuser.payload.user_id");
       // const newUser = await createUser(user);
-      console.log(getuser.payload.is_admin);
+      console.log(getuser.payload?.is_admin);
       // console.log(newUser,"jgfkjhgk")
-      if (getuser.payload.is_admin) {
+      if (getuser?.payload?.is_admin) {
+        window.location.href = "/admin";
+
         router.push("/admin");
+        console.log("ggggggggggg")
       }
-      if (newUser && !getuser.payload.is_admin) {
+      if (!getuser?.payload?.is_admin) {
         // router.push(`/patients/${getuser.payload.user_id}/register`);
-        router.push(`/patients/${getuser.payload.user_id}/new-appointment`);
+        router.push(`/patients/${getuser?.payload?.user_id}/new-appointment`);
       }
     } catch (error) {
       console.log(error);

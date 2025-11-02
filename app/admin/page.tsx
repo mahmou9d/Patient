@@ -98,7 +98,11 @@ const AdminPage = () => {
         <section className="admin-stat">
           <StatCard
             type="appointments"
-            count={Number(data?.total ?? 0)}
+            count={Number(
+              (data?.total ?? 0) -
+                (data?.pending_appointments_count ?? 0) -
+                (data?.cancelled_appointments_count ?? 0)
+            )}
             label="Scheduled appointments"
             icon={"/assets/icons/appointments.svg"}
           />

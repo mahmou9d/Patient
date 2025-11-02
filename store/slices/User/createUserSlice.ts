@@ -43,6 +43,8 @@ export const createUser = createAsyncThunk(
             }
 
             const data = await response.json();
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
             localStorage.setItem("access", data.access);
             localStorage.setItem("refresh", data.refresh);
             // console.log(data, "jbqguiglhiewf")
