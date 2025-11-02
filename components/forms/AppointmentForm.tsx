@@ -203,9 +203,11 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         {type === "create" && (
           <section className="mb-12 space-y-4">
-            {is_admin&&<Link href={"/admin"} className="text-green-500">
-              Admin
-            </Link>}
+            {is_admin && (
+              <Link href={"/admin"} className="text-green-500">
+                Admin
+              </Link>
+            )}
             <h1 className="header">New Appointment</h1>
             <p className="text-dark-700">
               Request a new appointment in 10 seconds.
@@ -215,7 +217,16 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
 
         {type !== "cancel" && (
           <>
-            <CustomFormField
+          <CustomFormField fieldType={FormFieldType.SELECT} control={form.control} name="doctor_id" label="Doctor" placeholder="Select a doctor" >
+             {Doctors.map((doctor, i) => (
+               <SelectItem  className="z-[9999]" key={doctor.id} value={doctor.id.toString()} > 
+               <div className="flex cursor-pointer items-center gap-2">
+                 <Image src={doctor.img_url.replace("http://", "https://")} width={32} height={32} alt="doctor" className="rounded-full border border-dark-500" /> 
+                 <p>{`${doctor.first_name} ${doctor.last_name}`}</p>
+                    </div> </SelectItem>
+                   ))}
+              </CustomFormField>
+            {/* <CustomFormField
               fieldType={FormFieldType.SELECT}
               control={form.control}
               name="doctor_id"
@@ -258,7 +269,7 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
                   )
                 )}
               </Accordion>
-            </CustomFormField>
+            </CustomFormField> */}
 
             <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
@@ -268,7 +279,14 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
               showTimeSelect
               dateFormat="MM/dd/yyyy  -  h:mm aa"
             />
-
+            <CustomFormField
+              fieldType={FormFieldType.DATE_PICKER}
+              control={form.control}
+              name="confirmed_appointment_datetime"
+              label="Confirmed appointment datetime"
+              showTimeSelect
+              dateFormat="MM/dd/yyyy  -  h:mm aa"
+            />
             <div
               className={`flex flex-col gap-6  ${
                 type === "create" && "xl:flex-row"

@@ -14,12 +14,15 @@ import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
 import { Appointment } from "@/types/appwrite.types";
 import { Button } from "@/components/ui/button";
 import { AppointmentModal } from "@/components/AppointmentModal";
+import { RootState } from "@/store/store";
+import { getUser } from "@/store/slices/User/getUserSlice";
 
 const AdminPage = () => {
-  const [paginat,setPaginat]=useState(0)
+  const [paginat, setPaginat] = useState(0);
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.getRecent);
-  console.log(data)
+  const { user_id } = useAppSelector((state: RootState) => state.getUser);
+  console.log(data);
   const {
     appointments,
     loading: allLoading,
@@ -33,16 +36,20 @@ const AdminPage = () => {
     dispatch(getRecentAppointmentList());
     dispatch(getAllAppointment());
     dispatch(getdoctors());
+    dispatch(getUser());
   }, [dispatch]);
-const book = appointments.slice(paginat,paginat + 10);
-console.log(book,"book")
+  const book = appointments.slice(paginat, paginat + 10);
+  console.log(book, "book");
   const columns = useAppointmentColumns();
   // const appointments = await getRecentAppointmentList();
   // console.log(appointments)
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
-        <Link href="/" className="cursor-pointer">
+        <Link
+          href={`/patients/${user_id}/new-appointment`}
+          className="cursor-pointer"
+        >
           <Image
             src="/assets/icons/logo-full.svg"
             height={32}
@@ -120,7 +127,7 @@ console.log(book,"book")
             {error || allError}
           </div>
         )} */}
-        <div className="flex flex-row">
+        <div className="flex flex-row w-full">
           <DataTable<Appointment, unknown>
             columns={columns}
             data={appointments || []}

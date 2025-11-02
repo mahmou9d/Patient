@@ -160,7 +160,12 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select
+            value={field.value}
+            onValueChange={(value) => {
+              field.onChange(value);
+            }}
+          >
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={props.placeholder} />
@@ -172,6 +177,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
+
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
