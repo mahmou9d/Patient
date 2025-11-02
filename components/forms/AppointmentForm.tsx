@@ -38,34 +38,34 @@ import Link from "next/link";
 import { getUser } from "@/store/slices/User/getUserSlice";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
-
+interface AppointmentFormProps {
+  userId: string;
+  type?: "create" | "schedule" | "cancel";
+  appointment?: any;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
+}
 export const AppointmentForm = ({
   userId,
   // patientId,
   type = "create",
   appointment,
   setOpen,
-}: {
-  userId: string;
-  type: "create" | "schedule" | "cancel";
-  appointment?: any;
-  setOpen?: Dispatch<SetStateAction<boolean>>;
-}) => {
+}: AppointmentFormProps) => {
   // console.log(userId)
   // console.log(appointment, "additional_notes");
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
   const { is_admin } = useAppSelector((state: RootState) => state.getUser);
   console.log(Doctors, "RootState");
   const dispatch = useAppDispatch();
-
+const currentType = type ?? "create";
   useEffect(() => {
     // console.log("🟢 Dispatching getdoctors...");
-    dispatch(getUser())
+    dispatch(getUser());
     dispatch(getdoctors());
   }, [dispatch]);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-const [openSpecialization, setOpenSpecialization] = useState<string>("");
+  const [openSpecialization, setOpenSpecialization] = useState<string>("");
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
@@ -195,12 +195,12 @@ const [openSpecialization, setOpenSpecialization] = useState<string>("");
     default:
       buttonLabel = "Submit Apppointment";
   }
-const groupedDoctors = Doctors.reduce((groups, doctor) => {
-  const key = doctor.specialty || "Other";
-  if (!groups[key]) groups[key] = [];
-  groups[key].push(doctor);
-  return groups;
-}, {} as Record<string, typeof Doctors>);
+  const groupedDoctors = Doctors.reduce((groups, doctor) => {
+    const key = doctor.specialty || "Other";
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(doctor);
+    return groups;
+  }, {} as Record<string, typeof Doctors>);
 
   return (
     <Form {...form}>
@@ -385,7 +385,7 @@ const groupedDoctors = Doctors.reduce((groups, doctor) => {
             />
             <div
               className={`flex flex-col gap-6  ${
-                type === "create" && "xl:flex-row"
+                currentType === "create" && "xl:flex-row"
               }`}
             >
               <CustomFormField
