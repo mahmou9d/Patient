@@ -58,7 +58,7 @@ const PatientForm = () => {
       if (getuser.payload.is_admin) {
         router.push("/admin");
       }
-      if (newUser) {
+      if (newUser && !getuser.payload.is_admin) {
         // router.push(`/patients/${getuser.payload.user_id}/register`);
         router.push(`/patients/${getuser.payload.user_id}/new-appointment`);
       }
