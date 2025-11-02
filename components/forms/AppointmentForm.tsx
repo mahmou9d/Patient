@@ -27,7 +27,10 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
 import { createAppointment } from "@/store/slices/Appointment/createAppointmentSlice";
 import { updateAppointment } from "@/store/slices/Appointment/updateAppointmentSlice";
-import { cancelAppointment, CancelAppointmentPayload } from "@/store/slices/Appointment/cancelAppointmentSlice";
+import {
+  cancelAppointment,
+  CancelAppointmentPayload,
+} from "@/store/slices/Appointment/cancelAppointmentSlice";
 import { getRecentAppointmentList } from "@/store/slices/Appointment/getRecentAppointmentListSlice";
 import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
 
@@ -84,13 +87,13 @@ export const AppointmentForm = ({
   const onSubmit = async (
     values: z.infer<typeof AppointmentFormValidation>
   ) => {
-const payload: CancelAppointmentPayload | null =
-  type === "cancel"
-    ? {
-        id: appointment?.id!,
-        reason: (values as any)?.reason || "",
-      }
-    : null;
+    const payload: CancelAppointmentPayload | null =
+      type === "cancel"
+        ? {
+            id: appointment?.id!,
+            reason: (values as any)?.reason || "",
+          }
+        : null;
     setIsLoading(true);
     // if (!values.doctor_id) {
     //   alert("Please select a doctor!");
@@ -136,12 +139,14 @@ const payload: CancelAppointmentPayload | null =
           );
         }
       } else if (type === "cancel" && userId) {
-         console.log(appointment?.id!);
-        const cancelAppointments = await dispatch(cancelAppointment(payload!)).unwrap();
-                if (cancelAppointments) {
-                  setOpen && setOpen(false);
-                  form.reset();
-                }
+        console.log(appointment?.id!);
+        const cancelAppointments = await dispatch(
+          cancelAppointment(payload!)
+        ).unwrap();
+        if (cancelAppointments) {
+          setOpen && setOpen(false);
+          form.reset();
+        }
       } else {
         console.log(values?.confirmed_appointment_datetime!);
         // if (values?.confirmed_appointment_datetime!) {
@@ -167,9 +172,8 @@ const payload: CancelAppointmentPayload | null =
       console.log(error);
     }
     setIsLoading(false);
-        dispatch(getRecentAppointmentList());
-        dispatch(getAllAppointment());
-
+    dispatch(getRecentAppointmentList());
+    dispatch(getAllAppointment());
   };
 
   let buttonLabel;

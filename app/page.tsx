@@ -11,6 +11,7 @@ const Home = async ({
   const params = await searchParams;
   const isAdmin = params?.admin === "true";
   // console.log(isAdmin);
+  
   return (
     <div className="flex h-screen max-h-screen">
       {isAdmin && <PassKeyModal />}

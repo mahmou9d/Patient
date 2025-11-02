@@ -5,12 +5,14 @@ import { refreshAccessToken } from "./createUserSlice";
 
 
 interface GetUserState {
+    is_admin:boolean;
     user_id: string;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: GetUserState = {
+    is_admin:false,
     user_id: "",
     loading: false,
     error: null,
@@ -62,7 +64,7 @@ export const getUser = createAsyncThunk(
             }
 
             const data = await response.json();
-            // console.log("✅ User data:", data);
+            console.log("✅ User data:", data);
             return data;
 
         } catch (error: any) {
@@ -91,6 +93,7 @@ const getUserSlice = createSlice({
             .addCase(getUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user_id = action.payload.user_id;
+                state.is_admin = action.payload.is_admin
             })
             .addCase(getUser.rejected, (state, action) => {
                 state.loading = false;
