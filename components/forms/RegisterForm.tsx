@@ -43,8 +43,9 @@ export enum FormFieldType {
 }
 
 const RegisterForm = ({ user }: { user: number }) => {
+  console.log(user)
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
-  const { is_admin } = useAppSelector((state: RootState) => state.getUser);
+  const { is_admin,user_id } = useAppSelector((state: RootState) => state.getUser);
   const dispatch = useAppDispatch();
 const { toast } = useToast();
 
@@ -140,7 +141,7 @@ const { toast } = useToast();
       // const newPatient = await registerPatient(registerUser);
       // console.log(newPatient);
       if (newPatient) {
-        router.push(`/patients/${user}/new-appointment`);
+        router.push(`/patients/${user_id}/new-appointment`);
          toast({
           title: "✅ Register successfully",
           variant: "success",

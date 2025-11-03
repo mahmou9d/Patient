@@ -9,7 +9,7 @@ const Registration = async ({ params }: SearchParamProps) => {
   // const user = await getUser();
   // const userid = user.user_id;
   // const patient = await getPatient(userId);
-  // console.log(userId);
+  console.log(userId);
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
