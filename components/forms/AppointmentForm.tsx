@@ -7,7 +7,15 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 // import { Doctors } from "@/constants";
 import // createAppointment,
 // updateAppointment,
@@ -33,11 +41,17 @@ import {
 } from "@/store/slices/Appointment/cancelAppointmentSlice";
 import { getRecentAppointmentList } from "@/store/slices/Appointment/getRecentAppointmentListSlice";
 import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 import Link from "next/link";
 import { getUser } from "@/store/slices/User/getUserSlice";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import { useToast } from "@/hooks/use-toast";
 interface AppointmentFormProps {
   userId: string;
   type?: "create" | "schedule" | "cancel";
@@ -57,7 +71,7 @@ export const AppointmentForm = ({
   const { is_admin } = useAppSelector((state: RootState) => state.getUser);
   console.log(Doctors, "RootState");
   const dispatch = useAppDispatch();
-const currentType = type ?? "create";
+  const currentType = type ?? "create";
   useEffect(() => {
     // console.log("🟢 Dispatching getdoctors...");
     dispatch(getUser());
@@ -66,7 +80,7 @@ const currentType = type ?? "create";
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [openSpecialization, setOpenSpecialization] = useState<string>("");
-
+  const { toast } = useToast();
   const AppointmentFormValidation = getAppointmentSchema(type);
 
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
@@ -141,6 +155,10 @@ const currentType = type ?? "create";
         ).unwrap();
         // console.log(newAppointment, "bbbbbbbbbbbbbbb");
         if (newAppointment) {
+          toast({
+            title: "✅ Appointment Created",
+            variant: "success",
+          });
           form.reset();
           router.push(
             `/patients/${userId}/new-appointment/success?appointmentId=${newAppointment?.appointment_id}`
@@ -154,6 +172,10 @@ const currentType = type ?? "create";
         if (cancelAppointments) {
           setOpen && setOpen(false);
           form.reset();
+          toast({
+            title: "❌ Appointment Cancelled",
+            variant: "destructive",
+          });
         }
       } else {
         console.log(values?.confirmed_appointment_datetime!);
@@ -174,6 +196,10 @@ const currentType = type ?? "create";
         if (updatedAppointment) {
           setOpen && setOpen(false);
           form.reset();
+          toast({
+            title: "🕓 Appointment schedule",
+            variant: "success",
+          });
         }
       }
     } catch (error) {

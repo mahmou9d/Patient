@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ReduxProvider } from "@/store/Providers";
+import { Toaster } from "@/components/ui/toaster";
 
 
 
@@ -36,10 +37,11 @@ export default function RootLayout({
         )}
       >
         <ReduxProvider>
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          {children}
-        </ThemeProvider>
-        </ReduxProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            {children}
+          </ThemeProvider>
+        </ReduxProvider>{" "}
+        <Toaster />
       </body>
     </html>
   );

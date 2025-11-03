@@ -25,6 +25,8 @@ export const createUser = createAsyncThunk(
     "users/createUser",
     async (user: CreateUserParams, { rejectWithValue }) => {
         // console.log(user.email, "hdkhgfhkfhfghj")
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
         try {
             const response = await fetch("https://fo2sh.pythonanywhere.com/api/auth/login/", {
                 method: "POST",
@@ -43,8 +45,7 @@ export const createUser = createAsyncThunk(
             }
 
             const data = await response.json();
-            localStorage.removeItem("access");
-            localStorage.removeItem("refresh");
+
             localStorage.setItem("access", data.access);
             localStorage.setItem("refresh", data.refresh);
             // console.log(data, "jbqguiglhiewf")

@@ -29,6 +29,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
 import Link from "next/link";
 import { getUser } from "@/store/slices/User/getUserSlice";
+import { useToast } from "@/hooks/use-toast";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -45,6 +46,7 @@ const RegisterForm = ({ user }: { user: number }) => {
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
   const { is_admin } = useAppSelector((state: RootState) => state.getUser);
   const dispatch = useAppDispatch();
+const { toast } = useToast();
 
   useEffect(() => {
     // console.log("🟢 Dispatching getdoctors...");
@@ -139,6 +141,10 @@ const RegisterForm = ({ user }: { user: number }) => {
       // console.log(newPatient);
       if (newPatient) {
         router.push(`/patients/${user}/new-appointment`);
+         toast({
+          title: "✅ Register successfully",
+          variant: "success",
+         });
       }
     } catch (error) {
       console.log(error);

@@ -15,6 +15,7 @@ import { AppDispatch } from "@/store/store";
 import { getUser } from "@/store/slices/User/getUserSlice";
 import Link from "next/link";
 import PassKeyModal from "../PassKeyModal";
+import { useToast } from "@/hooks/use-toast";
 // import { createUser } from "@/lib/actions/patient.actions";
 
 export enum FormFieldType {
@@ -29,6 +30,7 @@ export enum FormFieldType {
 }
 
 const PatientForm = () => {
+  const { toast } = useToast();
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -49,23 +51,33 @@ const PatientForm = () => {
         password: values.password,
       };
       // console.log(user);
-      const newUser = await dispatch(createUser(user));
-      const getuser = await dispatch(getUser());
+      const newUser = await dispatch(createUser(user)).unwrap();
+      const getuser = await dispatch(getUser()).unwrap();
       // console.log(getuser.payload.user_id, "getuser.payload.user_id");
       // const newUser = await createUser(user);
-      console.log(getuser.payload?.is_admin);
-      // console.log(newUser,"jgfkjhgk")
-      if (getuser?.payload?.is_admin) {
+      console.log(getuser,"lllll");
+      // console.log(newUser, "jgfkjhgk");
+      if (getuser?.is_admin) {
         window.location.href = "/admin";
 
         router.push("/admin");
-        console.log("ggggggggggg")
+        console.log("ggggggggggg");
       }
-      if (!getuser?.payload?.is_admin) {
+      if (!getuser?.is_admin) {
         // router.push(`/patients/${getuser.payload.user_id}/register`);
-        router.push(`/patients/${getuser?.payload?.user_id}/new-appointment`);
+        router.push(`/patients/${getuser?.user_id}/new-appointment`);
+              toast({
+                title: "✅ Login successful",
+                variant:"success"
+                // description: `Access token: ${res.access.slice(0, 10)}...`,
+              });
       }
     } catch (error) {
+      toast({
+        title: "❌ Email or password wrong",
+        //  description: error || "Invalid credentials",
+        variant: "destructive",
+      });
       console.log(error);
     }
 
@@ -73,6 +85,7 @@ const PatientForm = () => {
   };
   return (
     <>
+    
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <section className="mb-12 space-y-4">
@@ -116,7 +129,6 @@ const PatientForm = () => {
           </Link>
         </p>
       </Form>
-      
     </>
   );
 };
