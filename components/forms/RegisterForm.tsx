@@ -447,6 +447,15 @@ const { toast } = useToast();
           />
         </section>
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <p className="flex justify-center text-[12px] mb-5">
+          Already have an account?
+          <Link
+            href="/patients/login"
+            className="ml-2 text-[#24ae7c] hover:underline hover:underline-offset-1"
+          >
+            Log in
+          </Link>
+        </p>
       </form>
     </Form>
   );
