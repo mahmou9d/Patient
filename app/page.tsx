@@ -7,26 +7,28 @@ import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
 import { getUser } from "@/store/slices/User/getUserSlice";
 import { RootState } from "@/store/store";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const dispatch = useAppDispatch();
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
   // const { access, data } = useAppSelector(
   //   (state: RootState) => state.createUser
   // )
-  ;const {user_id } = useAppSelector(
-    (state: RootState) => state.getUser
-  );
+  const { user_id } = useAppSelector((state: RootState) => state.getUser);
 
-console.log(user_id);
-    useEffect(() => {
-// dispatch(getAppointmentDoctor("1"));
-      dispatch(getUser());
-      // dispatch(getAllAppointment());
-      dispatch(getdoctors());
-    }, [dispatch]);
-    console.log(Doctors,"uihorffre");
+  console.log(user_id);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const access = localStorage.getItem("access");
+      setIsLoggedIn(!!access);
+    }
+    dispatch(getUser());
+    // dispatch(getAllAppointment());
+    dispatch(getdoctors());
+  }, [dispatch]);
+  console.log(Doctors, "uihorffre");
   const doctors = [
     {
       id: 1,
@@ -65,7 +67,13 @@ console.log(user_id);
     },
   ];
   const duration = 30;
-  
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+  };
+
+  if (isLoggedIn === null) return null;
+
   return (
     <div>
       <header>
@@ -84,7 +92,7 @@ console.log(user_id);
             <a href="#Contact">Contact</a>
           </nav>
           <div className="auth-buttons">
-            {localStorage.getItem("access")?.length === undefined ? (
+            {!isLoggedIn ? (
               <>
                 <a href="/login" className="login-btn">
                   Log in
@@ -96,10 +104,7 @@ console.log(user_id);
             ) : (
               <button
                 className="logout-btn bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.reload();
-                }}
+                onClick={handleLogout}
               >
                 logout
               </button>
@@ -339,8 +344,7 @@ console.log(user_id);
           </p>
           <Link
             href={
-              localStorage.getItem("access")?.length === undefined
-                ?"/login": `/patients/${user_id}/new-appointment`
+              !isLoggedIn ? "/login" : `/patients/${user_id}/new-appointment`
             }
             className="btn btn-primary"
           >
