@@ -14,7 +14,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
 
   useEffect(() => {
     if (!user.is_admin) {
-      router.replace("/");
+      router.replace("/notAccess");
     } else if (user.is_admin) {
       router.replace("/admin");
     }
