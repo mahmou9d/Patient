@@ -262,7 +262,10 @@ export default function HomePage() {
                 illnesses. Our general practitioners provide comprehensive
                 primary care for patients of all ages.
               </p>
-              <a href="/services" className="service-link">
+              <a
+                href="https://en.wikipedia.org/wiki/Internal_medicine"
+                className="service-link"
+              >
                 Learn More →
               </a>
             </div>
@@ -278,7 +281,10 @@ export default function HomePage() {
                 Specialized care for infants and children, including
                 vaccinations, growth monitoring, and developmental assessments.
               </p>
-              <a href="/services" className="service-link">
+              <a
+                href="https://en.wikipedia.org/wiki/Pediatrics"
+                className="service-link"
+              >
                 Learn More →
               </a>
             </div>
@@ -294,7 +300,10 @@ export default function HomePage() {
                 Expert cardiac care including heart disease prevention,
                 diagnosis, and treatment with cutting-edge technology.
               </p>
-              <a href="/services" className="service-link">
+              <a
+                href="https://en.wikipedia.org/wiki/Cardiology"
+                className="service-link"
+              >
                 Learn More →
               </a>
             </div>
@@ -310,7 +319,10 @@ export default function HomePage() {
                 Specialized treatment for neurological conditions, headaches,
                 and disorders affecting the nervous system.
               </p>
-              <a href="/services" className="service-link">
+              <a
+                href="https://en.wikipedia.org/wiki/Neurology"
+                className="service-link"
+              >
                 Learn More →
               </a>
             </div>
