@@ -75,10 +75,10 @@ export const InfiniteMovingCards = ({
                 className="relative z-20 rounded-xl w-full h-[250px] object-cover"
               />
               <div className="relative z-20 mt-4 flex flex-col items-start">
-                <span className="text-base font-semibold text-neutral-800 dark:text-gray-100">
+                <span className="text-base font-semibold text-neutral-800 dark:text-gray-100 capitalize">
                   {`${item.first_name} ${item.last_name}`}
                 </span>
-                <span className="text-sm text-neutral-500 dark:text-gray-400">
+                <span className="text-sm text-neutral-500 dark:text-gray-400 capitalize">
                   {item.specialty}
                 </span>
               </div>
