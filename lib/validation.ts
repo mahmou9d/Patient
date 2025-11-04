@@ -11,7 +11,7 @@ export const RegisterUserValidation = z.object({
         .min(2, "Username must be at least 2 characters")
         .max(50, "Username must be at most 50 characters"),
 
-    email: z.string().email("Invalid email address"),
+    email: z.email({ message: "Invalid email address" }),
 
     password: z
         .string()

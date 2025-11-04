@@ -1,17 +1,32 @@
 "use client"
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
+import { getAppointmentDoctor } from "@/store/slices/Appointment/getAppointmentDoctorSlice";
 import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
+import { getUser } from "@/store/slices/User/getUserSlice";
 import { RootState } from "@/store/store";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
+  // const { access, data } = useAppSelector(
+  //   (state: RootState) => state.createUser
+  // )
+  ;const {user_id } = useAppSelector(
+    (state: RootState) => state.getUser
+  );
+
+console.log(user_id);
     useEffect(() => {
+// dispatch(getAppointmentDoctor("1"));
+      dispatch(getUser());
+      // dispatch(getAllAppointment());
       dispatch(getdoctors());
     }, [dispatch]);
-    console.log(Doctors);
+    console.log(Doctors,"uihorffre");
   const doctors = [
     {
       id: 1,
@@ -69,7 +84,7 @@ export default function HomePage() {
             <a href="#Contact">Contact</a>
           </nav>
           <div className="auth-buttons">
-            {Doctors.length === 0 ? (
+            {localStorage.getItem("access")?.length === undefined ? (
               <>
                 <a href="/login" className="login-btn">
                   Log in
@@ -322,7 +337,15 @@ export default function HomePage() {
             Schedule your appointment today and experience world-class
             healthcare in a warm and welcoming environment.
           </p>
-          <button className="btn btn-primary">Schedule Now</button>
+          <Link
+            href={
+              localStorage.getItem("access")?.length === undefined
+                ?"/login": `/patients/${user_id}/new-appointment`
+            }
+            className="btn btn-primary"
+          >
+            Schedule Now
+          </Link>
         </div>
       </div>
       <footer

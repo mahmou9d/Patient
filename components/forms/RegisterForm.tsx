@@ -142,21 +142,50 @@ const { toast } = useToast();
       // console.log(newPatient);
       if (newPatient) {
         router.push(`/patients/${user_id}/new-appointment`);
-         toast({
+        toast({
           title: "✅ Register successfully",
           variant: "success",
-         });
+        });
+      } else {
+        toast({
+          title: "❌ Registration failed!",
+          description:
+            (newPatient as any)?.message ||
+            "Please check your information and try again.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.log(error);
+      toast({
+        title: "⚠️ Unexpected Error",
+        description:
+          (error as any)?.message ||
+          "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
     }
 
     setIsLoading(false);
   };
+const onError = (errors: any) => {
+  console.log("❌ Validation errors:", errors);
+
+  const firstErrorField = Object.keys(errors)[0];
+  const firstErrorMessage =
+    errors[firstErrorField]?.message || "Invalid input data";
+
+  toast({
+    title: "⚠️ Invalid Form Data",
+    description: firstErrorMessage,
+    variant: "destructive",
+  });
+};
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onError)}
         className="space-y-12 flex-1"
       >
         {/* <pre className="text-red-500 text-xs">

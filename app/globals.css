@@ -657,7 +657,7 @@
 .doctors-scroll {
   display: flex;
   gap: 20px;
-  animation: scroll-doctors 30s linear infinite;
+  animation: scroll-doctors 15s linear infinite;
 }
 
 .doctor-card {

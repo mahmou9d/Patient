@@ -14,13 +14,14 @@ const Registration = async ({ params }: SearchParamProps) => {
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
+          <Link href={"/"} >
           <Image
             src="/assets/icons/logo-full.svg"
             height={1000}
             width={1000}
             alt="patient"
             className="mb-12 h-10 w-fit"
-          />
+          /></Link>
           
           <RegisterForm user={Number(userId)} />
           <p className="copyright py-10">© 2025 CarePluse</p>

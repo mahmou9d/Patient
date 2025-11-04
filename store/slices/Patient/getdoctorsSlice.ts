@@ -33,7 +33,7 @@ export const getdoctors = createAsyncThunk(
                 state?.createUser?.access ||
                 state?.registerPatient?.access || localStorage.getItem("access");
             // console.log(token, "tyjty")
-            if (!token) throw new Error("No access token found");
+            // if (!token) throw new Error("No access token found");
 
 
             // console.log(token, "🔑 current access token");
@@ -42,7 +42,7 @@ export const getdoctors = createAsyncThunk(
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    // Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -62,7 +62,7 @@ export const getdoctors = createAsyncThunk(
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        // Authorization: `Bearer ${token}`,
                     },
                 });
             }

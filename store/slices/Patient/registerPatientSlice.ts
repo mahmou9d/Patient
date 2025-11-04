@@ -53,6 +53,7 @@ export const registerPatient = createAsyncThunk(
         } catch (error: any) {
             console.error("Error while registering patient:", error);
             return rejectWithValue(error.message || "Network error");
+            
         }
     }
 );

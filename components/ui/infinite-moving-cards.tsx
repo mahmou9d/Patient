@@ -87,7 +87,7 @@ export const InfiniteMovingCards = ({
         ))}
       </ul>
       {/* ✅ أنيميشن سلسة */}
-      <style jsx>{`
+      {/* <style jsx>{`
         @keyframes scroll {
           0% {
             transform: translateX(0);
@@ -98,10 +98,10 @@ export const InfiniteMovingCards = ({
         }
 
         .animate-scroll {
-          animation: scroll var(--animation-duration, 40s)
+          animation: scroll var(--animation-duration, 10s)
             var(--animation-direction, forwards) linear infinite;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };

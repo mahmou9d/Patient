@@ -11,6 +11,7 @@ interface CreateUserState {
     loading: boolean;
     error: string | null;
     success: boolean;
+    data:any
 }
 
 const initialState: CreateUserState = {
@@ -19,6 +20,7 @@ const initialState: CreateUserState = {
     loading: false,
     error: null,
     success: false,
+    data:null
 };
 
 export const createUser = createAsyncThunk(
@@ -48,7 +50,7 @@ export const createUser = createAsyncThunk(
 
             localStorage.setItem("access", data.access);
             localStorage.setItem("refresh", data.refresh);
-            // console.log(data, "jbqguiglhiewf")
+            console.log(data, "jbqguiglhiewf")
             return data;
 
         } catch (error: any) {
@@ -111,7 +113,7 @@ const createUserSlice = createSlice({
                 state.success = true;
                 state.access = action.payload.access;
                 state.refresh = action.payload.refresh;
-
+                state.data = action.payload
             })
             .addCase(createUser.rejected, (state, action) => {
                 state.loading = false;
