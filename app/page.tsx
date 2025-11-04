@@ -16,7 +16,7 @@ export default function HomePage() {
   // const { access, data } = useAppSelector(
   //   (state: RootState) => state.createUser
   // )
-  const { user_id } = useAppSelector((state: RootState) => state.getUser);
+  const { user_id ,is_admin} = useAppSelector((state: RootState) => state.getUser);
 
   console.log(user_id);
   useEffect(() => {
@@ -102,12 +102,17 @@ export default function HomePage() {
                 </a>
               </>
             ) : (
-              <button
-                className="logout-btn bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
-                onClick={handleLogout}
-              >
-                logout
-              </button>
+              <>
+                <button
+                  className="logout-btn bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+                  onClick={handleLogout}
+                >
+                  logout
+                </button>
+                {is_admin&&<a href="/admin" className="text-green-500">
+                  Admin
+                </a>}
+              </>
             )}
           </div>
         </div>

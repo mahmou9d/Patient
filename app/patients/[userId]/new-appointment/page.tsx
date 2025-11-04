@@ -1,5 +1,5 @@
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
-import PrivateRoute from "@/components/PrivateRoute";
+// import PrivateRoute from "@/components/PrivateRoute";
 // import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ const Appointment = async ({ params }: SearchParamProps) => {
   // const patient = await getPatient(userId);
   // console.log(patient)
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
       <div className="flex h-screen max-h-screen">
         <section className="remove-scrollbar container">
           <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
@@ -38,7 +38,7 @@ const Appointment = async ({ params }: SearchParamProps) => {
           className="side-img max-w-[390px]"
         />
       </div>
-    </PrivateRoute>
+    // </PrivateRoute>
   );
 };
 

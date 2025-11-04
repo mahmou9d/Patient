@@ -1034,7 +1034,7 @@ nav a:hover {
 
 main {
   max-width: 1400px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 0;
   min-height: auto;
   background: #131619;

@@ -1,6 +1,6 @@
 "use client";
 
-import PrivateRoute from "@/components/PrivateRoute";
+// import PrivateRoute from "@/components/PrivateRoute";
 import { Button } from "@/components/ui/button";
 // import { Doctors } from "@/constants";
 // import { getAppointment } from "@/lib/actions/appointment.actions";
@@ -60,7 +60,7 @@ const Success =  ({
 console.log(doctor,"gtrt")
 
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
       <div className=" flex h-screen max-h-screen px-[5%]">
         <div className="success-img">
           <Link href="/">
@@ -134,7 +134,7 @@ console.log(doctor,"gtrt")
           {/* <p className="copyright">© 2024 CarePluse</p> */}
         </div>
       </div>
-    </PrivateRoute>
+    // </PrivateRoute>
   );
 };
 

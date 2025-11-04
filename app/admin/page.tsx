@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { getRecentAppointmentList } from "@/store/slices/Appointment/getRecentAppointmentListSlice";
 import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
-import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
+// import { getdoctors } from "@/store/slices/Patient/getdoctorsSlice";
 import { Appointment } from "@/types/appwrite.types";
 import { Button } from "@/components/ui/button";
 import { AppointmentModal } from "@/components/AppointmentModal";
@@ -18,29 +18,29 @@ import { RootState } from "@/store/store";
 import { getUser } from "@/store/slices/User/getUserSlice";
 import AdminRoute from "@/components/AdminRoute";
 
-const AdminPage = () => {
+const Admin = () => {
   const [paginat, setPaginat] = useState(0);
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.getRecent);
   const { user_id } = useAppSelector((state: RootState) => state.getUser);
-  console.log(data);
+  // console.log(data);
   const {
     appointments,
     loading: allLoading,
     error: allError,
   } = useAppSelector((state) => state.getAllAppointment);
-  const { Doctors, loading: docsLoading } = useAppSelector(
-    (state) => state.getdoctors
-  );
+  // const { Doctors, loading: docsLoading } = useAppSelector(
+  //   (state) => state.getdoctors
+  // );
 
   useEffect(() => {
     dispatch(getRecentAppointmentList());
     dispatch(getAllAppointment());
-    dispatch(getdoctors());
+    // dispatch(getdoctors());
     dispatch(getUser());
   }, [dispatch]);
   const book = appointments.slice(paginat, paginat + 10);
-  console.log(book, "book");
+  // console.log(book, "book");
   const columns = useAppointmentColumns();
   // const appointments = await getRecentAppointmentList();
   // console.log(appointments)
@@ -90,7 +90,7 @@ const AdminPage = () => {
                 onClick={() => {
                   dispatch(getRecentAppointmentList());
                   dispatch(getAllAppointment());
-                  dispatch(getdoctors());
+                  // dispatch(getdoctors());
                 }}
               >
                 Refresh
@@ -121,18 +121,6 @@ const AdminPage = () => {
               icon={"/assets/icons/cancelled.svg"}
             />
           </section>
-          {/* 
-        {(loading || allLoading || docsLoading) && (
-          <div className="w-full rounded-md border border-dark-500 bg-dark-400 p-4 text-dark-700">
-            Loading admin data...
-          </div>
-        )}
-
-        {(error || allError) && (
-          <div className="w-full rounded-md border border-red-500 bg-red-950/40 p-4 text-red-400">
-            {error || allError}
-          </div>
-        )} */}
           <div className="flex flex-row w-full">
             <DataTable<Appointment, unknown>
               columns={columns}
@@ -173,8 +161,8 @@ const AdminPage = () => {
           </div>
         </main>
       </div>
-    </AdminRoute>
+      </AdminRoute>
   );
 };
 
-export default AdminPage;
+export default Admin;
