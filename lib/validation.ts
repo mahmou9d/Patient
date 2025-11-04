@@ -181,9 +181,15 @@ export const CreateAppointmentSchema = z.object({
         .max(500, "Reason must be at most 500 characters"),
     additional_notes: z.string().optional(),
     // cancellationReason: z.string().optional(),
+    // confirmed_appointment_datetime: z
+    //     .string()
+    //     .refine((val) => !isNaN(Date.parse(val)), "Invalid date format").optional(),
     confirmed_appointment_datetime: z
-        .string()
-        .refine((val) => !isNaN(Date.parse(val)), "Invalid date format").optional(),
+        .union([
+            z.literal(""), // يسمح بالسلسلة الفاضية
+            z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid date format"),
+        ])
+        .optional(),
 
 });
 

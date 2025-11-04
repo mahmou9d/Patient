@@ -69,7 +69,7 @@ export const AppointmentForm = ({
   // console.log(appointment, "additional_notes");
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
   const { is_admin } = useAppSelector((state: RootState) => state.getUser);
-  console.log(Doctors, "RootState");
+  // console.log(Doctors, "RootState");
   const dispatch = useAppDispatch();
   const currentType = type ?? "create";
   useEffect(() => {
@@ -81,7 +81,9 @@ export const AppointmentForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [openSpecialization, setOpenSpecialization] = useState<string>("");
   const { toast } = useToast();
+  
   const AppointmentFormValidation = getAppointmentSchema(type);
+
 
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
@@ -102,7 +104,7 @@ export const AppointmentForm = ({
       confirmed_appointment_datetime:
         appointment?.confirmed_appointment_datetime
           ? new Date(appointment.confirmed_appointment_datetime).toISOString()
-          : new Date().toISOString(),
+          : "",
     },
   });
 
@@ -170,6 +172,8 @@ export const AppointmentForm = ({
           cancelAppointment(payload!)
         ).unwrap();
         if (cancelAppointments) {
+          form.setValue("confirmed_appointment_datetime", ""); // يمسح القيمة من الفورم
+          form.trigger("confirmed_appointment_datetime"); // يجبر الفورم يحدّث القيم
           setOpen && setOpen(false);
           form.reset();
           toast({
@@ -231,6 +235,9 @@ export const AppointmentForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
+        {/* <pre className="text-red-500 text-xs">
+          {JSON.stringify(form.formState.errors, null, 2)}
+        </pre> */}
         {type === "create" && (
           <section className="mb-12 space-y-4">
             {is_admin && (
