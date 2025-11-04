@@ -1,6 +1,6 @@
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import PrivateRoute from "@/components/PrivateRoute";
-import { getPatient } from "@/lib/actions/patient.actions";
+// import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 const Appointment = async ({ params }: SearchParamProps) => {
   const { userId } = await params;
