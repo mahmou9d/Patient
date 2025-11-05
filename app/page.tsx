@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getAllAppointment } from "@/store/slices/Appointment/getAllAppointmentSlice";
@@ -16,7 +16,9 @@ export default function HomePage() {
   // const { access, data } = useAppSelector(
   //   (state: RootState) => state.createUser
   // )
-  const { user_id ,is_admin} = useAppSelector((state: RootState) => state.getUser);
+  const { user_id, is_admin } = useAppSelector(
+    (state: RootState) => state.getUser
+  );
 
   console.log(user_id);
   useEffect(() => {
@@ -109,9 +111,11 @@ export default function HomePage() {
                 >
                   logout
                 </button>
-                {is_admin&&<a href="/admin" className="text-green-500">
-                  Admin
-                </a>}
+                {is_admin && (
+                  <a href="/admin" className="text-green-500">
+                    Admin
+                  </a>
+                )}
               </>
             )}
           </div>
@@ -128,7 +132,14 @@ export default function HomePage() {
               recovery.
             </p>
             <div className="hero-buttons">
-              <a href="/login" className="btn btn-primary">
+              <a
+                href={
+                  !isLoggedIn
+                    ? "/login"
+                    : `/patients/${user_id}/new-appointment`
+                }
+                className="btn btn-primary"
+              >
                 Book Appointment
               </a>
               <a href="#About" className="btn btn-secondary">
