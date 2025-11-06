@@ -61,7 +61,9 @@ export const useAppointmentColumns = () => {
             {formatDateTime(
               appointment?.confirmed_appointment_datetime as string
             ).dateTime === "Jan 1, 1970, 2:00 AM"
-              ? ""
+              ? formatDateTime(
+                  appointment?.expected_appointment_date
+                ).dateTime
               : formatDateTime(
                   appointment?.confirmed_appointment_datetime as string
                 ).dateTime}
