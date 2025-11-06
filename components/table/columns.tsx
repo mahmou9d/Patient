@@ -58,7 +58,13 @@ export const useAppointmentColumns = () => {
         const appointment = row.original;
         return (
           <p className="text-14-regular min-w-[100px]">
-            {formatDateTime(appointment.expected_appointment_date).dateTime}
+            {formatDateTime(
+              appointment?.confirmed_appointment_datetime as string
+            ).dateTime === "Jan 1, 1970, 2:00 AM"
+              ? ""
+              : formatDateTime(
+                  appointment?.confirmed_appointment_datetime as string
+                ).dateTime}
           </p>
         );
       },
