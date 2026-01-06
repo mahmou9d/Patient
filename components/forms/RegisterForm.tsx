@@ -43,17 +43,19 @@ export enum FormFieldType {
 }
 
 const RegisterForm = ({ user }: { user: number }) => {
-  console.log(user)
+  console.log(user);
   const { Doctors } = useAppSelector((state: RootState) => state.getdoctors);
-  const { is_admin,user_id } = useAppSelector((state: RootState) => state.getUser);
+  const { is_admin, user_id } = useAppSelector(
+    (state: RootState) => state.getUser
+  );
   const dispatch = useAppDispatch();
-const { toast } = useToast();
-
-  useEffect(() => {
-    // console.log("🟢 Dispatching getdoctors...");
-    dispatch(getUser());
-    dispatch(getdoctors());
-  }, [dispatch]);
+  const { toast } = useToast();
+  console.log(Doctors)
+  // useEffect(() => {
+  //   // console.log("🟢 Dispatching getdoctors...");
+  //   dispatch(getUser());
+  //   dispatch(getdoctors());
+  // }, [dispatch]);
   // const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -168,19 +170,19 @@ const { toast } = useToast();
 
     setIsLoading(false);
   };
-const onError = (errors: any) => {
-  console.log("❌ Validation errors:", errors);
+  const onError = (errors: any) => {
+    console.log("❌ Validation errors:", errors);
 
-  const firstErrorField = Object.keys(errors)[0];
-  const firstErrorMessage =
-    errors[firstErrorField]?.message || "Invalid input data";
+    const firstErrorField = Object.keys(errors)[0];
+    const firstErrorMessage =
+      errors[firstErrorField]?.message || "Invalid input data";
 
-  toast({
-    title: "⚠️ Invalid Form Data",
-    description: firstErrorMessage,
-    variant: "destructive",
-  });
-};
+    toast({
+      title: "⚠️ Invalid Form Data",
+      description: firstErrorMessage,
+      variant: "destructive",
+    });
+  };
 
   return (
     <Form {...form}>

@@ -587,7 +587,6 @@
   border: 1px solid #242831;
   border-radius: 16px;
   padding: 32px;
-  backdrop-filter: blur(10px);
   text-align: center;
   transition: all 0.3s ease;
 }
@@ -666,7 +665,7 @@
   border: 1px solid #242831;
   border-radius: 16px;
   padding: 24px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   text-align: center;
   transition: all 0.3s ease;
   display: flex;
@@ -718,7 +717,7 @@
   border: 1px solid #242831;
   border-radius: 16px;
   padding: 40px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   transition: all 0.3s ease;
 }
 
@@ -775,7 +774,7 @@
   border-radius: 16px;
   padding: 32px;
   text-align: center;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   transition: all 0.3s ease;
 }
 
@@ -802,7 +801,7 @@
   border-radius: 16px;
   padding: 60px;
   text-align: center;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .cta-section h2 {
@@ -926,7 +925,7 @@ header {
   border-radius: 20px;
   border: 1px solid #242831;
   margin-bottom: 0;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .header-content {
@@ -971,7 +970,7 @@ nav {
   border: 1px solid #242831;
   border-radius: 50px;
   padding: 12px 32px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -1163,3 +1162,21 @@ footer {
 .wrapper:hover .item {
   animation-play-state: paused;
 }
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-scroll {
+          animation: scroll linear infinite;
+          display: flex;
+          width: fit-content;
+        }
+
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }

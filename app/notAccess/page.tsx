@@ -7,7 +7,7 @@ export default function NotAccessPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-white px-4 text-center">
-      <div className="bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-2xl max-w-md">
+      <div className="bg-white/10 p-10 rounded-2xl shadow-2xl max-w-md">
         <div className="flex flex-col items-center space-y-4">
           <ShieldAlert className="w-16 h-16 text-yellow-300" />
           <h1 className="text-3xl font-bold">Access Denied</h1>

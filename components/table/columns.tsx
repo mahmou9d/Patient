@@ -14,9 +14,9 @@ export const useAppointmentColumns = () => {
   const dispatch = useAppDispatch();
   const { Doctors } = useAppSelector((state) => state.getdoctors);
 
-  useEffect(() => {
-    dispatch(getdoctors());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getdoctors());
+  // }, [dispatch]);
 
   const columns: ColumnDef<Appointment>[] = [
     {

@@ -72,11 +72,11 @@ export const AppointmentForm = ({
   // console.log(Doctors, "RootState");
   const dispatch = useAppDispatch();
   const currentType = type ?? "create";
-  useEffect(() => {
-    // console.log("🟢 Dispatching getdoctors...");
-    dispatch(getUser());
-    dispatch(getdoctors());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // console.log("🟢 Dispatching getdoctors...");
+  //   dispatch(getUser());
+  //   dispatch(getdoctors());
+  // }, [dispatch]);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [openSpecialization, setOpenSpecialization] = useState<string>("");

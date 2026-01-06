@@ -37,7 +37,7 @@ const Admin = () => {
     dispatch(getRecentAppointmentList());
     dispatch(getAllAppointment());
     // dispatch(getdoctors());
-    dispatch(getUser());
+    // dispatch(getUser());
   }, [dispatch]);
   const book = appointments.slice(paginat, paginat + 10);
   // console.log(book, "book");
